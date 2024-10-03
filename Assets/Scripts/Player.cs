@@ -8,11 +8,17 @@ public class Player : MonoBehaviour
     [SerializeField] private bool estaVivo = true;
     [SerializeField] private int forcaPulo;
     [SerializeField] private float velocidade;
+    [SerializeField] private bool temChave;
     private Rigidbody rb;
     private bool estaPulando;
+    private Vector3 angleRotation;
+    private bool pegando;
     // Start is called before the first frame update
     void Start()
     {
+        temChave = false;
+        pegando = false;
+        angleRotation = new Vector3(0, 90, 0);
         animator = GetComponent<Animator>();
         rb = GetComponent<Rigidbody>();
     }
@@ -53,6 +59,7 @@ public class Player : MonoBehaviour
         if(Input.GetKeyDown(KeyCode.E))
         {
             animator.SetTrigger("Pegando");
+            pegando = true;
         }
 
         if(Input.GetMouseButtonDown(0))
@@ -75,6 +82,13 @@ public class Player : MonoBehaviour
             animator.SetTrigger("EstaVivo");
             estaVivo = true;
         }
+
+        TurnAround();
+    }
+
+    void FixedUpdate()
+    {
+
     }
 
     private void Walk(float velo = 1)
@@ -83,8 +97,10 @@ public class Player : MonoBehaviour
         {
             velo = velocidade;
         }
-        float moveV = Input.GetAxis("Vertical");
-        transform.position += new Vector3(0,0, moveV * velocidade * Time.deltaTime);
+        float fowardInput = Input.GetAxis("Vertical");
+        Vector3 moveDirection = transform.forward * fowardInput;
+        Vector3 moveFoward = rb.position + moveDirection * velo * Time.deltaTime;
+        rb.MovePosition(moveFoward);
     }
 
     private void Jump()
@@ -94,6 +110,13 @@ public class Player : MonoBehaviour
         animator.SetBool("EstaNoChao", false);
     }
 
+    private void TurnAround()
+    {
+        float sideInput = Input.GetAxis("Horizontal");
+        Quaternion deltaRotation = Quaternion.Euler(angleRotation * sideInput * Time.deltaTime);
+        rb.MoveRotation(rb.rotation * deltaRotation);
+    }
+
     private void OnCollisionEnter(Collision collision)
     {
         if(collision.gameObject.CompareTag("Chao"))
@@ -101,6 +124,33 @@ public class Player : MonoBehaviour
             estaPulando = false;
             animator.SetBool("EstaNoChao", true);
         }
+    }
+
+    private void OnTriggerStay(Collider other)
+    {
+        if(other.gameObject.CompareTag("Chave") && pegando)
+        {
+            temChave = true;
+            pegando = false;
+            Destroy(other.gameObject);
+        }
+
+        if(other.gameObject.CompareTag("Porta") && pegando && temChave)
+        {
+            other.gameObject.GetComponent<Animator>().SetTrigger("Abrir");
+            temChave = true;
+        }
+
+        if(other.gameObject.CompareTag("Bau") && pegando && temChave)
+        {
+            other.gameObject.GetComponent<Animator>().SetTrigger("AbrirBau");
+            temChave = true;
+        }
+    }
+
+    private void OnCollisionExit(Collision other)
+    {
+        pegando = false;
     }
     //desculpa
 }

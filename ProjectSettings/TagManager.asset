@@ -3,7 +3,11 @@
 --- !u!78 &1
 TagManager:
   serializedVersion: 2
-  tags: []
+  tags:
+  - Chao
+  - Chave
+  - Bau
+  - Porta
   layers:
   - Default
   - TransparentFX

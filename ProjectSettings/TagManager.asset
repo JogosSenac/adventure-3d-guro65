@@ -8,6 +8,9 @@ TagManager:
   - Chave
   - Bau
   - Porta
+  - StatusDefesa
+  - StatusDano
+  - StatusNome
   layers:
   - Default
   - TransparentFX

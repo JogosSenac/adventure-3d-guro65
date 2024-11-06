@@ -6,6 +6,18 @@ EditorBuildSettings:
   serializedVersion: 2
   m_Scenes:
   - enabled: 1
-    path: Assets/Scenes/Menu.unity
+    path: Assets/Scenes/Usando/Menu.unity
     guid: 99c9720ab356a0642a771bea13969a05
+  - enabled: 1
+    path: Assets/Scenes/Usando/SelecaoDePersonagem.unity
+    guid: 1654bf9c580212c4d874492a04fd3661
+  - enabled: 1
+    path: Assets/Scenes/Usando/Jogo.unity
+    guid: 66d917b19417e1041b9573b1689c2cbd
+  - enabled: 0
+    path: Assets/Scenes/Usando/Jogo 1.unity
+    guid: 1d0322b7f56747240ad702dc3f59b3d2
+  - enabled: 1
+    path: Assets/Scenes/Usando/JogoAnoite.unity
+    guid: 0f2bd16b89d83ac478c231e7a282e187
   m_configObjects: {}

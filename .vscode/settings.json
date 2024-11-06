@@ -51,5 +51,5 @@
         "temp/": true,
         "Temp/": true
     },
-    "dotnet.defaultSolution": "adventure-3d-guro65.sln"
+    "dotnet.defaultSolution": "Macacos-do-deserto.sln"
 }
